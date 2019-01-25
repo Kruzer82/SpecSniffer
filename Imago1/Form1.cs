@@ -1014,14 +1014,7 @@ namespace Sniffer
 
         private void ServerSave_Click(object sender, EventArgs e)
         {
-            if (CheckForUSB())
-            {
-                SaveTab.SaleOrderId = TBox_SO.Text;
-                SaveTab.Rep = TBox_RP.Text;
-                SaveTab.Comments = TBox_comments.Text.Replace("\r\n", "/").Replace(";", "/");
-                SaveTab.Licence = LBox_Licence.Text;
-                SaveTab.WriteSettings();
-            }
+
 
 
             void SaveSpec()
@@ -1162,22 +1155,22 @@ namespace Sniffer
                 if (errorCode == 2) { MessageBox.Show("Log has not been made!\nCause:\nGPU driver not installed. "); }
             }
 
-            //if (ValidateTB(TBox_RP, true) && ValidateTB(TBox_SO, true) && ValidateTB(TBox_model, true) && ValidateTB(TBox_serial, true) && ValidateTB(TBox_cpu, true) && ValidateTB(TBox_optical, true) && ValidateTB(TBox_ram, true) && ValidateTB(TBox_diagonal, true)
-            //    && ValidateTB(TBox_resname, true) && ValidateTB(TBox_os_name, true) && ValidateTB(TBox_os_build, true) && ValidateTB(TBox_gpu, true) && ValidateTB(TBox_os_language, true) && ValidateTB(TBox_HDDname, true) && ValidateTB(TBox_HDDsize, true)
-            //    && ValidateLicence())
-            //{
-            //    SaveSpec();
+            if (ValidateTB(TBox_RP, true) && ValidateTB(TBox_SO, true) && ValidateTB(TBox_model, true) && ValidateTB(TBox_serial, true) && ValidateTB(TBox_cpu, true) && ValidateTB(TBox_optical, true) && ValidateTB(TBox_ram, true) && ValidateTB(TBox_diagonal, true)
+                && ValidateTB(TBox_resname, true) && ValidateTB(TBox_os_name, true) && ValidateTB(TBox_os_build, true) && ValidateTB(TBox_gpu, true) && ValidateTB(TBox_os_language, true) && ValidateTB(TBox_HDDname, true) && ValidateTB(TBox_HDDsize, true)
+                && ValidateLicence())
+            {
+                SaveSpec();
 
-            //    if(CheckForUSB())
-            //    {
-            //        SaveTab.SaleOrderId = TBox_SO.Text;
-            //        SaveTab.Rep = TBox_RP.Text;
-            //        SaveTab.Comments = TBox_comments.Text.Replace("\r\n", "/").Replace(";", "/");
-            //        SaveTab.Licence = LBox_Licence.Text;
-            //        SaveTab.WriteSettings();
-            //    }
-               
-            //}
+                if (CheckForUSB())
+                {
+                    SaveTab.SaleOrderId = TBox_SO.Text;
+                    SaveTab.Rep = TBox_RP.Text;
+                    SaveTab.Comments = TBox_comments.Text.Replace("\r\n", "/").Replace(";", "/");
+                    SaveTab.Licence = LBox_Licence.Text;
+                    SaveTab.WriteSettings();
+                }
+
+            }
         }
         #endregion
 

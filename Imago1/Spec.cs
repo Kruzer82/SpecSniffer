@@ -313,6 +313,8 @@ namespace SpecSniffer
                     OpticalDrive = (string)Obj["MediaType"];
             }
             catch (Exception) { OpticalDrive = "WMI_Error"; }
+
+            OpticalDrive = (string.IsNullOrWhiteSpace(OpticalDrive)) ? "n/a" : OpticalDrive;
         }
 
         public static void GetRAM()
