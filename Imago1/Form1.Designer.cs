@@ -92,9 +92,6 @@
             this.btnDrivers = new MetroFramework.Controls.MetroButton();
             this.metroLabel14 = new MetroFramework.Controls.MetroLabel();
             this.tabSO = new System.Windows.Forms.TabPage();
-            this.CheckB_comments = new MetroFramework.Controls.MetroCheckBox();
-            this.CheckB_Licence = new MetroFramework.Controls.MetroCheckBox();
-            this.CheckB_SO = new MetroFramework.Controls.MetroCheckBox();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.btnCMARlog = new MetroFramework.Controls.MetroButton();
             this.btnServerSave = new MetroFramework.Controls.MetroButton();
@@ -106,7 +103,7 @@
             this.metroLabel12 = new MetroFramework.Controls.MetroLabel();
             this.tableLayoutPanel9 = new System.Windows.Forms.TableLayoutPanel();
             this.metroLabel19 = new MetroFramework.Controls.MetroLabel();
-            this.CBox_Licence = new MetroFramework.Controls.MetroComboBox();
+            this.LBox_Licence = new MetroFramework.Controls.MetroComboBox();
             this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
             this.metroLabel17 = new MetroFramework.Controls.MetroLabel();
             this.TBox_comments = new MetroFramework.Controls.MetroTextBox();
@@ -245,7 +242,7 @@
             this.Tab.Location = new System.Drawing.Point(-4, 44);
             this.Tab.Margin = new System.Windows.Forms.Padding(0);
             this.Tab.Name = "Tab";
-            this.Tab.SelectedIndex = 0;
+            this.Tab.SelectedIndex = 3;
             this.Tab.Size = new System.Drawing.Size(1048, 660);
             this.Tab.Style = MetroFramework.MetroColorStyle.Lime;
             this.Tab.TabIndex = 2;
@@ -534,7 +531,7 @@
             this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 21.12211F));
             this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 56F));
             this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 64F));
-            this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 108F));
+            this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 109F));
             this.tableLayoutPanel11.Controls.Add(this.metroLabel35, 0, 0);
             this.tableLayoutPanel11.Controls.Add(this.metroLabel34, 0, 0);
             this.tableLayoutPanel11.Controls.Add(this.metroLabel33, 0, 0);
@@ -553,7 +550,7 @@
             this.metroLabel35.AutoSize = true;
             this.metroLabel35.FontSize = MetroFramework.MetroLabelSize.Small;
             this.metroLabel35.ForeColor = System.Drawing.Color.Gray;
-            this.metroLabel35.Location = new System.Drawing.Point(326, 5);
+            this.metroLabel35.Location = new System.Drawing.Point(325, 5);
             this.metroLabel35.Name = "metroLabel35";
             this.metroLabel35.Size = new System.Drawing.Size(58, 15);
             this.metroLabel35.TabIndex = 5;
@@ -567,9 +564,9 @@
             this.metroLabel34.AutoSize = true;
             this.metroLabel34.FontSize = MetroFramework.MetroLabelSize.Small;
             this.metroLabel34.ForeColor = System.Drawing.Color.Gray;
-            this.metroLabel34.Location = new System.Drawing.Point(390, 5);
+            this.metroLabel34.Location = new System.Drawing.Point(389, 5);
             this.metroLabel34.Name = "metroLabel34";
-            this.metroLabel34.Size = new System.Drawing.Size(103, 15);
+            this.metroLabel34.Size = new System.Drawing.Size(104, 15);
             this.metroLabel34.TabIndex = 4;
             this.metroLabel34.Text = "Data";
             this.metroLabel34.UseCustomBackColor = true;
@@ -581,7 +578,7 @@
             this.metroLabel33.AutoSize = true;
             this.metroLabel33.FontSize = MetroFramework.MetroLabelSize.Small;
             this.metroLabel33.ForeColor = System.Drawing.Color.Gray;
-            this.metroLabel33.Location = new System.Drawing.Point(270, 5);
+            this.metroLabel33.Location = new System.Drawing.Point(269, 5);
             this.metroLabel33.Name = "metroLabel33";
             this.metroLabel33.Size = new System.Drawing.Size(50, 15);
             this.metroLabel33.TabIndex = 3;
@@ -609,7 +606,7 @@
             this.metroLabel31.AutoSize = true;
             this.metroLabel31.FontSize = MetroFramework.MetroLabelSize.Small;
             this.metroLabel31.ForeColor = System.Drawing.Color.Gray;
-            this.metroLabel31.Location = new System.Drawing.Point(214, 5);
+            this.metroLabel31.Location = new System.Drawing.Point(213, 5);
             this.metroLabel31.Name = "metroLabel31";
             this.metroLabel31.Size = new System.Drawing.Size(50, 15);
             this.metroLabel31.TabIndex = 1;
@@ -1055,70 +1052,12 @@
             // tabSO
             // 
             this.tabSO.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
-            this.tabSO.Controls.Add(this.CheckB_comments);
-            this.tabSO.Controls.Add(this.CheckB_Licence);
-            this.tabSO.Controls.Add(this.CheckB_SO);
             this.tabSO.Controls.Add(this.tableLayoutPanel6);
             this.tabSO.Location = new System.Drawing.Point(4, 44);
             this.tabSO.Name = "tabSO";
             this.tabSO.Size = new System.Drawing.Size(1040, 612);
             this.tabSO.TabIndex = 2;
             this.tabSO.Text = "Save Spec. [F4]  ";
-            // 
-            // CheckB_comments
-            // 
-            this.CheckB_comments.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.CheckB_comments.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
-            this.CheckB_comments.DisplayFocus = true;
-            this.CheckB_comments.FontSize = MetroFramework.MetroCheckBoxSize.Tall;
-            this.CheckB_comments.FontWeight = MetroFramework.MetroCheckBoxWeight.Bold;
-            this.CheckB_comments.Location = new System.Drawing.Point(1009, 92);
-            this.CheckB_comments.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
-            this.CheckB_comments.Name = "CheckB_comments";
-            this.CheckB_comments.Size = new System.Drawing.Size(13, 13);
-            this.CheckB_comments.Style = MetroFramework.MetroColorStyle.Silver;
-            this.CheckB_comments.TabIndex = 102;
-            this.CheckB_comments.Text = " ";
-            this.CheckB_comments.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.CheckB_comments.UseCustomBackColor = true;
-            this.CheckB_comments.UseSelectable = true;
-            this.CheckB_comments.UseStyleColors = true;
-            // 
-            // CheckB_Licence
-            // 
-            this.CheckB_Licence.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
-            this.CheckB_Licence.DisplayFocus = true;
-            this.CheckB_Licence.FontSize = MetroFramework.MetroCheckBoxSize.Tall;
-            this.CheckB_Licence.FontWeight = MetroFramework.MetroCheckBoxWeight.Bold;
-            this.CheckB_Licence.Location = new System.Drawing.Point(1010, 54);
-            this.CheckB_Licence.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
-            this.CheckB_Licence.Name = "CheckB_Licence";
-            this.CheckB_Licence.Size = new System.Drawing.Size(13, 13);
-            this.CheckB_Licence.Style = MetroFramework.MetroColorStyle.Silver;
-            this.CheckB_Licence.TabIndex = 101;
-            this.CheckB_Licence.Text = " ";
-            this.CheckB_Licence.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.CheckB_Licence.UseCustomBackColor = true;
-            this.CheckB_Licence.UseSelectable = true;
-            this.CheckB_Licence.UseStyleColors = true;
-            // 
-            // CheckB_SO
-            // 
-            this.CheckB_SO.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
-            this.CheckB_SO.DisplayFocus = true;
-            this.CheckB_SO.FontSize = MetroFramework.MetroCheckBoxSize.Tall;
-            this.CheckB_SO.FontWeight = MetroFramework.MetroCheckBoxWeight.Bold;
-            this.CheckB_SO.Location = new System.Drawing.Point(1009, 12);
-            this.CheckB_SO.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
-            this.CheckB_SO.Name = "CheckB_SO";
-            this.CheckB_SO.Size = new System.Drawing.Size(13, 13);
-            this.CheckB_SO.Style = MetroFramework.MetroColorStyle.Silver;
-            this.CheckB_SO.TabIndex = 100;
-            this.CheckB_SO.Text = " ";
-            this.CheckB_SO.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.CheckB_SO.UseCustomBackColor = true;
-            this.CheckB_SO.UseSelectable = true;
-            this.CheckB_SO.UseStyleColors = true;
             // 
             // tableLayoutPanel6
             // 
@@ -1347,7 +1286,7 @@
             this.tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 112F));
             this.tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel9.Controls.Add(this.metroLabel19, 0, 0);
-            this.tableLayoutPanel9.Controls.Add(this.CBox_Licence, 1, 0);
+            this.tableLayoutPanel9.Controls.Add(this.LBox_Licence, 1, 0);
             this.tableLayoutPanel9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel9.Location = new System.Drawing.Point(0, 40);
             this.tableLayoutPanel9.Margin = new System.Windows.Forms.Padding(0);
@@ -1371,39 +1310,40 @@
             this.metroLabel19.UseCustomBackColor = true;
             this.metroLabel19.UseCustomForeColor = true;
             // 
-            // CBox_Licence
+            // LBox_Licence
             // 
-            this.CBox_Licence.AccessibleDescription = "";
-            this.CBox_Licence.AccessibleName = "";
-            this.CBox_Licence.AllowDrop = true;
-            this.CBox_Licence.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
-            this.CBox_Licence.DisplayFocus = true;
-            this.CBox_Licence.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.CBox_Licence.ForeColor = System.Drawing.Color.Gainsboro;
-            this.CBox_Licence.ItemHeight = 23;
-            this.CBox_Licence.Items.AddRange(new object[] {
+            this.LBox_Licence.AccessibleDescription = "";
+            this.LBox_Licence.AccessibleName = "";
+            this.LBox_Licence.AllowDrop = true;
+            this.LBox_Licence.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
+            this.LBox_Licence.DisplayFocus = true;
+            this.LBox_Licence.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.LBox_Licence.ForeColor = System.Drawing.Color.Gainsboro;
+            this.LBox_Licence.ItemHeight = 23;
+            this.LBox_Licence.Items.AddRange(new object[] {
             "Win10 Pro CMAR",
-            "Win10 RRPCitizenship",
+            "Win10 RRPC",
             "Win10 Home CMAR",
             "Win7 Pro",
             "Win7 Home Premium",
             "Win10 OEM Pro",
             "Win10 OEM Home",
-            "Win8 OEM"});
-            this.CBox_Licence.Location = new System.Drawing.Point(112, 5);
-            this.CBox_Licence.Margin = new System.Windows.Forms.Padding(0, 5, 0, 5);
-            this.CBox_Licence.Name = "CBox_Licence";
-            this.CBox_Licence.PromptText = "Click to drop list...";
-            this.CBox_Licence.Size = new System.Drawing.Size(379, 29);
-            this.CBox_Licence.Style = MetroFramework.MetroColorStyle.Black;
-            this.CBox_Licence.TabIndex = 1;
-            this.CBox_Licence.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.CBox_Licence.UseCustomBackColor = true;
-            this.CBox_Licence.UseCustomForeColor = true;
-            this.CBox_Licence.UseSelectable = true;
-            this.CBox_Licence.UseStyleColors = true;
-            this.CBox_Licence.SelectedValueChanged += new System.EventHandler(this.CBox_Licence_SelectedValueChanged);
-            this.CBox_Licence.Validating += new System.ComponentModel.CancelEventHandler(this.CBox_Licence_Validating);
+            "Win8 OEM",
+            "No COA"});
+            this.LBox_Licence.Location = new System.Drawing.Point(112, 5);
+            this.LBox_Licence.Margin = new System.Windows.Forms.Padding(0, 5, 0, 5);
+            this.LBox_Licence.Name = "LBox_Licence";
+            this.LBox_Licence.PromptText = "Click to drop list...";
+            this.LBox_Licence.Size = new System.Drawing.Size(379, 29);
+            this.LBox_Licence.Style = MetroFramework.MetroColorStyle.Black;
+            this.LBox_Licence.TabIndex = 1;
+            this.LBox_Licence.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.LBox_Licence.UseCustomBackColor = true;
+            this.LBox_Licence.UseCustomForeColor = true;
+            this.LBox_Licence.UseSelectable = true;
+            this.LBox_Licence.UseStyleColors = true;
+            this.LBox_Licence.SelectedValueChanged += new System.EventHandler(this.CBox_Licence_SelectedValueChanged);
+            this.LBox_Licence.Validating += new System.ComponentModel.CancelEventHandler(this.CBox_Licence_Validating);
             // 
             // tableLayoutPanel8
             // 
@@ -3659,7 +3599,7 @@
         private System.Windows.Forms.TabPage tabSO;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.TabPage tabDrivers;
-        private MetroFramework.Controls.MetroComboBox CBox_Licence;
+        private MetroFramework.Controls.MetroComboBox LBox_Licence;
         private System.ComponentModel.BackgroundWorker backgroundWorker;
         private System.Windows.Forms.Timer timerAudio;
         private System.Windows.Forms.Timer timerMic;
@@ -3714,8 +3654,6 @@
         private MetroFramework.Controls.MetroLabel metroLabel13;
         private MetroFramework.Controls.MetroTextBox TBox_SO;
         private MetroFramework.Controls.MetroTextBox TBox_RP;
-        private MetroFramework.Controls.MetroCheckBox CheckB_Licence;
-        private MetroFramework.Controls.MetroCheckBox CheckB_comments;
         private MetroFramework.Controls.MetroTextBox TBox_comments;
         private MetroFramework.Controls.MetroTextBox TBox_os_build;
         private MetroFramework.Controls.MetroLabel metroLabel15;
@@ -3737,7 +3675,6 @@
         private MetroFramework.Controls.MetroButton btnMic;
         private System.Windows.Forms.Panel panel2;
         private Emgu.CV.UI.ImageBox imageBox1;
-        private MetroFramework.Controls.MetroCheckBox CheckB_SO;
         private MetroFramework.Controls.MetroTextBox TBox_HDDstatus;
         private MetroFramework.Controls.MetroCheckBox cbWIFI;
         private MetroFramework.Controls.MetroCheckBox cbBluetooth;

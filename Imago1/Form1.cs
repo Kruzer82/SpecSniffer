@@ -112,68 +112,32 @@ namespace Sniffer
             return (Directory.Exists(Path.Run)) ? true : false;
         }
 
-        /// <summary>
-        /// Read and load settings of save tab, from csv file located on USB.
-        /// </summary>
-        private void ReadLastKnownSettings()
-        {
-            try
-            {
-                StreamReader reader = new StreamReader(File.OpenRead(Path.SoSettings));
-                while (!reader.EndOfStream)
-                {
-                    string csvSpliter = reader.ReadLine();
-                    if (!String.IsNullOrWhiteSpace(csvSpliter))
-                    {
-                        string[] csvLine = csvSpliter.Split(';');
+       ///// <summary>
+       ///// Save SO, RP licence and comments if USB is plugged in
+       ///// </summary>
+       // private void SaveLastKnownSettings()
+       // {
+       //     if (CheckForUSB())
+       //     {
+       //         StringBuilder sbSettings = new StringBuilder();
+       //         string saveStr = String.Format("{0};{1};{2};{3};{4};{5};{6}",
+       //             TBox_RP.Text,
+       //             TBox_SO.Text, (CheckB_SO.Checked) ? "t" : "f",
+       //             LBox_Licence.Text, (CheckB_Licence.Checked) ? "t" : "f",
+       //             TBox_comments.Text.Replace("\r\n", "/").Replace(";", "/"), (CheckB_comments.Checked) ? "t" : "f");
+       //         sbSettings.AppendLine(saveStr);
+       //         try
+       //         {
+       //             File.WriteAllText(Path.SoSettings, string.Empty);
+       //             File.AppendAllText(Path.SoSettings, sbSettings.ToString());
+       //         }
+       //         catch (Exception ex)
+       //         {
+       //             ConsoleWrite("Settings not saved. " + ex.Message);
+       //         }
+       //     }
 
-                        TBox_RP.Text = csvLine[0];
-                        TBox_SO.Text = csvLine[1];
-                        CheckB_SO.Checked = (csvLine[2] == "t") ? true : false;
-                        CBox_Licence.Text = csvLine[3];
-                        CheckB_Licence.Checked = (csvLine[4] == "t") ? true : false;
-                        TBox_comments.Text = csvLine[5];
-                        CheckB_comments.Checked = (csvLine[6] == "t") ? true : false;
-                    }
-                }
-                reader.Close();
-            }
-            catch (FileNotFoundException)
-            {
-                ConsoleWrite("Could not load last known settings for Save Tab. File not found.");
-            }
-            catch (Exception ex)
-            {
-                ConsoleWrite("Error while loading Save settings." + ex.Message);
-            }
-        }
-
-       /// <summary>
-       /// Save SO, RP licence and comments if USB is plugged in
-       /// </summary>
-        private void SaveLastKnownSettings()
-        {
-            if (CheckForUSB())
-            {
-                StringBuilder sbSettings = new StringBuilder();
-                string saveStr = String.Format("{0};{1};{2};{3};{4};{5};{6}",
-                    TBox_RP.Text,
-                    TBox_SO.Text, (CheckB_SO.Checked) ? "t" : "f",
-                    CBox_Licence.Text, (CheckB_Licence.Checked) ? "t" : "f",
-                    TBox_comments.Text.Replace("\r\n", "/").Replace(";", "/"), (CheckB_comments.Checked) ? "t" : "f");
-                sbSettings.AppendLine(saveStr);
-                try
-                {
-                    File.WriteAllText(Path.SoSettings, string.Empty);
-                    File.AppendAllText(Path.SoSettings, sbSettings.ToString());
-                }
-                catch (Exception ex)
-                {
-                    ConsoleWrite("Settings not saved. " + ex.Message);
-                }
-            }
-
-        }
+       // }
 
         MySqlConnection connMySQL = null;
         /// <summary>
@@ -526,16 +490,16 @@ namespace Sniffer
         }
         private bool ValidateLicence()
         {
-            if (String.IsNullOrEmpty(CBox_Licence.Text))
+            if (String.IsNullOrEmpty(LBox_Licence.Text))
             {
-                CBox_Licence.BackColor = Color.DarkRed;
+                LBox_Licence.BackColor = Color.DarkRed;
                 ConsoleWrite("!DataValidate: Select device type or enter old licence.");
                 return false;
             }
             else
             {
-                CBox_Licence.BackColor = Color.FromArgb(45, 45, 45);
-                CBox_Licence.ForeColor = Color.DarkOliveGreen;
+                LBox_Licence.BackColor = Color.FromArgb(45, 45, 45);
+                LBox_Licence.ForeColor = Color.DarkOliveGreen;
                 return true;
             }
         }
@@ -755,23 +719,24 @@ namespace Sniffer
             //check if program is running as administrator
             if ((new WindowsPrincipal(WindowsIdentity.GetCurrent())).IsInRole(WindowsBuiltInRole.Administrator) == false)
             {
-                MetroMessageBox.Show(this, "\nAdministrator privileges required.", "", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                MetroMessageBox.Show(this, "\nAdministrator privileges are required to run program.", "", MessageBoxButtons.OK, MessageBoxIcon.Stop);
                 this.Close();
             }
-
             
             backgroundWorker.RunWorkerAsync();
             //some of get spec methods are here for performance
             Spec.GetFingerprint();
             Spec.GetLicenceKey();
-
-
-
+            //get hdd info
             hdd.GetDiskInfo();
 
-            
 
-            ReadLastKnownSettings();
+            //Load & apply last settings
+            SaveTab.ReadLastSettings();
+            TBox_RP.Text = SaveTab.Rep;
+            TBox_SO.Text = SaveTab.SaleOrderId;
+            LBox_Licence.Text = SaveTab.Licence;
+
 
             //set hdd info TextBoxses
             TBox_HDDsize.Lines = hdd.HDDs.Select(m => m.Value.Size).ToArray();
@@ -890,7 +855,7 @@ namespace Sniffer
             }
             else if (e.ProgressPercentage == 5)
             {
-                TBox_batteryHealth.Text = Spec.BatteryHealth;
+                TBox_batteryHealth.Text = Spec.BatteryHealth+"%";
             }
             else if (e.ProgressPercentage == 4)
             {
@@ -1155,7 +1120,7 @@ namespace Sniffer
 
                         cmd.Parameters.AddWithValue("@os_language", TBox_os_language.Text);
                         cmd.Parameters.AddWithValue("@os_key", Spec.LicenceKey);
-                        cmd.Parameters.AddWithValue("@os_label", CBox_Licence.Text);
+                        cmd.Parameters.AddWithValue("@os_label", LBox_Licence.Text);
                         cmd.Parameters.AddWithValue("@comments", comments);
 
                         cmd.Parameters.AddWithValue("@bluetooth", bluetooth);
@@ -1190,7 +1155,7 @@ namespace Sniffer
                 && ValidateLicence())
             {
                 SaveSpec();
-                SaveLastKnownSettings();
+               // SaveLastKnownSettings();
             }
         }
         #endregion
@@ -1689,7 +1654,7 @@ namespace Sniffer
         private void CBox_Licence_SelectedValueChanged(object sender, EventArgs e)
         {
             if (!String.IsNullOrWhiteSpace(this.Text))
-                CBox_Licence.BackColor = Color.FromArgb(45, 45, 45);
+                LBox_Licence.BackColor = Color.FromArgb(45, 45, 45);
         }
         #endregion
         #region change color after enter textboxes
