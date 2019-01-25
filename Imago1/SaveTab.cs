@@ -41,7 +41,7 @@ namespace Sniffer
 
         }
 
-        public static void WriteSaveXML()
+        public static void WriteSettings()
         {
             try
             {
@@ -54,9 +54,11 @@ namespace Sniffer
                     new XAttribute("Licence", Licence)
                     ));
 
-                doc.Save("LastSettings.xml");
+                doc.Save("Settings.xml");
             }
             catch { }
         }
+
+
     }
 }

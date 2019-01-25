@@ -242,7 +242,7 @@
             this.Tab.Location = new System.Drawing.Point(-4, 44);
             this.Tab.Margin = new System.Windows.Forms.Padding(0);
             this.Tab.Name = "Tab";
-            this.Tab.SelectedIndex = 3;
+            this.Tab.SelectedIndex = 0;
             this.Tab.Size = new System.Drawing.Size(1048, 660);
             this.Tab.Style = MetroFramework.MetroColorStyle.Lime;
             this.Tab.TabIndex = 2;
@@ -531,7 +531,7 @@
             this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 21.12211F));
             this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 56F));
             this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 64F));
-            this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 109F));
+            this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 110F));
             this.tableLayoutPanel11.Controls.Add(this.metroLabel35, 0, 0);
             this.tableLayoutPanel11.Controls.Add(this.metroLabel34, 0, 0);
             this.tableLayoutPanel11.Controls.Add(this.metroLabel33, 0, 0);
@@ -550,7 +550,7 @@
             this.metroLabel35.AutoSize = true;
             this.metroLabel35.FontSize = MetroFramework.MetroLabelSize.Small;
             this.metroLabel35.ForeColor = System.Drawing.Color.Gray;
-            this.metroLabel35.Location = new System.Drawing.Point(325, 5);
+            this.metroLabel35.Location = new System.Drawing.Point(324, 5);
             this.metroLabel35.Name = "metroLabel35";
             this.metroLabel35.Size = new System.Drawing.Size(58, 15);
             this.metroLabel35.TabIndex = 5;
@@ -564,9 +564,9 @@
             this.metroLabel34.AutoSize = true;
             this.metroLabel34.FontSize = MetroFramework.MetroLabelSize.Small;
             this.metroLabel34.ForeColor = System.Drawing.Color.Gray;
-            this.metroLabel34.Location = new System.Drawing.Point(389, 5);
+            this.metroLabel34.Location = new System.Drawing.Point(388, 5);
             this.metroLabel34.Name = "metroLabel34";
-            this.metroLabel34.Size = new System.Drawing.Size(104, 15);
+            this.metroLabel34.Size = new System.Drawing.Size(105, 15);
             this.metroLabel34.TabIndex = 4;
             this.metroLabel34.Text = "Data";
             this.metroLabel34.UseCustomBackColor = true;
@@ -578,7 +578,7 @@
             this.metroLabel33.AutoSize = true;
             this.metroLabel33.FontSize = MetroFramework.MetroLabelSize.Small;
             this.metroLabel33.ForeColor = System.Drawing.Color.Gray;
-            this.metroLabel33.Location = new System.Drawing.Point(269, 5);
+            this.metroLabel33.Location = new System.Drawing.Point(268, 5);
             this.metroLabel33.Name = "metroLabel33";
             this.metroLabel33.Size = new System.Drawing.Size(50, 15);
             this.metroLabel33.TabIndex = 3;
@@ -606,7 +606,7 @@
             this.metroLabel31.AutoSize = true;
             this.metroLabel31.FontSize = MetroFramework.MetroLabelSize.Small;
             this.metroLabel31.ForeColor = System.Drawing.Color.Gray;
-            this.metroLabel31.Location = new System.Drawing.Point(213, 5);
+            this.metroLabel31.Location = new System.Drawing.Point(212, 5);
             this.metroLabel31.Name = "metroLabel31";
             this.metroLabel31.Size = new System.Drawing.Size(50, 15);
             this.metroLabel31.TabIndex = 1;
