@@ -14,7 +14,21 @@ namespace SpecSniffer
         public static string ModelFull { get; private set; }
         public static string ModelShort { get; private set; }
         public static string SerialNumber { get; private set; }
-        public static string CPU { get; private set; }
+        private static string _cpu;
+        public static string CPU
+        {
+            get => _cpu;
+            private set
+            {
+                StringBuilder cpuTrimm = new StringBuilder(value);
+                cpuTrimm.Replace("Intel(R) Core(TM)", "");
+                cpuTrimm.Replace("Intel(R) Xeon(R)", "");
+                cpuTrimm.Replace("Intel(R) Atom(TM)", "");
+                cpuTrimm.Replace("Intel(R) Pentium(R)", "");
+                cpuTrimm.Replace("CPU", "");
+                _cpu = Regex.Replace(cpuTrimm.ToString(), @"\s+", " ").Trim(); //remove extra spaces
+            }
+        }
         public static List<byte> Ram { get; private set; }
         public static string RamSum { get; private set; }
         public static string OpticalDrive { get; private set; }
@@ -22,7 +36,12 @@ namespace SpecSniffer
         public static string Resolution { get; private set; }
         public static string ResolutionName { get; private set; }
         public static string Diagonal { get; private set; }
-        public static string OsName { get; private set; }
+        private static string _osName;
+        public static string OsName
+        {
+            get => (string.IsNullOrWhiteSpace(_osName)) ? "no_data" : _osName;
+            private set => _osName = value.Replace("Microsoft", "").Trim();
+        }
         public static string OsBuild { get; private set; }
         public static string OsLanguages { get; private set; }
         public static string LicenceKey { get; private set; }
@@ -36,9 +55,6 @@ namespace SpecSniffer
         public static string EstimatedChargeRemaining { get; private set; }
         public static string ChargeRate { get; private set; }
 
-
-
-         
         //Displays charge/discharge rate of battery
         public static void GetBatteryChargeRate()
         {
@@ -348,6 +364,8 @@ namespace SpecSniffer
             {
                 foreach (ManagementObject Obj in new ManagementObjectSearcher("root\\CIMV2", "SELECT Name FROM Win32_Processor").Get())
                     CPU = (string)Obj["Name"];
+
+
             }
             catch (Exception) { CPU = "WMI_Error"; }
         }

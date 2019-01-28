@@ -112,59 +112,6 @@ namespace Sniffer
             return (Directory.Exists(Path.Run)) ? true : false;
         }
 
-       ///// <summary>
-       ///// Save SO, RP licence and comments if USB is plugged in
-       ///// </summary>
-       // private void SaveLastKnownSettings()
-       // {
-       //     if (CheckForUSB())
-       //     {
-       //         StringBuilder sbSettings = new StringBuilder();
-       //         string saveStr = String.Format("{0};{1};{2};{3};{4};{5};{6}",
-       //             TBox_RP.Text,
-       //             TBox_SO.Text, (CheckB_SO.Checked) ? "t" : "f",
-       //             LBox_Licence.Text, (CheckB_Licence.Checked) ? "t" : "f",
-       //             TBox_comments.Text.Replace("\r\n", "/").Replace(";", "/"), (CheckB_comments.Checked) ? "t" : "f");
-       //         sbSettings.AppendLine(saveStr);
-       //         try
-       //         {
-       //             File.WriteAllText(Path.SoSettings, string.Empty);
-       //             File.AppendAllText(Path.SoSettings, sbSettings.ToString());
-       //         }
-       //         catch (Exception ex)
-       //         {
-       //             ConsoleWrite("Settings not saved. " + ex.Message);
-       //         }
-       //     }
-
-       // }
-
-        MySqlConnection connMySQL = null;
-        /// <summary>
-        /// Connect to MySQL server. Properties are edited in Settings class.
-        /// </summary>
-        private void ConnectToMySQL()
-        {
-            string connStr = "SERVER=" + Settings.server + ";PORT=" + Settings.port + ";USERID=" + Settings.userID + ";PASSWORD=" + Settings.dbPSWD + ";DATABASE=" + Settings.database +
-            ";Connection Timeout=3;";
-            try
-            {
-                connMySQL = new MySqlConnection(@connStr);
-                connMySQL.Open();
-                statusMySQL.Text = "on";
-                statusMySQL.ForeColor = Color.MediumSpringGreen;
-            }
-            catch (Exception ex)
-            {
-                ConsoleWrite("MySQL connection errror. "+ex.Message);
-            }
-            finally
-            {
-                if (connMySQL != null)
-                    connMySQL.Close(); //Closes DB connection.
-            }
-        }
-
         private void SetStatusStrip()
         {
             if (CheckForInternetConnection())
@@ -344,104 +291,17 @@ namespace Sniffer
             }
         }
 
-        /// <summary>
-        /// Search for given value in specific mySQL database
-        /// </summary>
-        /// <param name="column">MySQL colummn name</param>
-        /// <param name="table">MySQL table name</param>
-        /// <param name="value">value to inset into MySQL table</param>
-        /// <param name="msg"></param>
-        /// <returns>0=error, 1= value found 2=value not found</returns>
-        private bool IsValueInDB(string column, string table, string value, bool dataMsg, bool noDataMsg)
-        {
-            MySqlCommand cmd = new MySqlCommand();
-            cmd.Connection = connMySQL;
-            cmd.CommandText = String.Format("SELECT {0} FROM {1} WHERE {0} = @value ORDER BY id DESC LIMIT 1", column, table);
-            cmd.Parameters.AddWithValue("@value", value);
-            try
-            {
-                connMySQL.Open();
-                if (cmd.ExecuteScalar() != null)
-                {
-                    if (dataMsg)
-                    {
-                        DialogResult dialogResult = MessageBox.Show(String.Format(
-                        "{0} '{1}' already exist's in {2} database.\nAdd anyway?", column.ToUpper(), value.ToUpper(), table.ToUpper()), "", MessageBoxButtons.YesNo);
-                        if (dialogResult == DialogResult.Yes) { return false; }
-                        else if (dialogResult == DialogResult.No) { return true; }
-                        else { return true; }
-                    }
-                    else { return true; }
-                }
-                else
-                {
-                    if (noDataMsg)
-                    {
-                        DialogResult dialogResult = MessageBox.Show("Serial not found in SO database.\nIf this PC is for SO\nclick 'Yes', make SO log and try again.\n\n" +
-                                                                    "To cancel and save CMAR anyway click 'No'.", "", MessageBoxButtons.YesNo);
-                        if (dialogResult == DialogResult.No) { return true; }
-                        else { return false; }
-                    }
-                    else { return false; }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("IsValueInDB error: " + ex.Message);
-                return false;
-            }
-            finally { if (connMySQL != null) { connMySQL.Close(); } }
-
-        }
-
-        /// <summary>
-        /// Update last row in MySQL database. Used to add licence number of existing in database model.
-        /// </summary>
-        /// <param name="table"></param>
-        /// <param name="updateColumn"></param>
-        /// <param name="newValue"></param>
-        /// <param name="searchColumn"></param>
-        /// <param name="searchValue"></param>
-        private void MySQL_UpdateValue(string table, string updateColumn, string newValue, string searchColumn, string searchValue)
-        {
-            MySqlCommand cmd = new MySqlCommand();
-            cmd.Connection = connMySQL;
-            cmd.CommandText = String.Format("UPDATE {0} SET {1} = @newValue WHERE {2} = @searchValue ORDER BY id DESC LIMIT 1", table, updateColumn, searchColumn);
-            cmd.Parameters.AddWithValue("@newValue", newValue);
-            cmd.Parameters.AddWithValue("@searchValue", searchValue);
-            try
-            {
-                connMySQL.Open();
-                cmd.ExecuteNonQuery();
-                ConsoleWrite(String.Format("@MySQLUpdate: PC identificated by {0} has been updated with value {1} on column {2}", searchValue, newValue, updateColumn));
-            }
-            catch (Exception ex)
-            {
-                ConsoleWrite("!MySQLUpdate: Error " + ex.Message);
-                ConsoleWrite("!MySQLUpdate: Couldn't update value...");
-            }
-            finally
-            {
-                if (connMySQL != null)
-                    connMySQL.Close();
-            }
-        }
-
-       
-
         #region Validate Save Textbox's
-        private bool ValidateTB(MetroFramework.Controls.MetroTextBox tBox, bool sendMsg)
+
+        private bool HasDataTextBox(MetroFramework.Controls.MetroTextBox tBox, bool sendMsg)
         {
             if (!String.IsNullOrWhiteSpace(tBox.Text))
             {
-                tBox.BackColor = Color.FromArgb(45, 45, 45);
-                tBox.ForeColor = Color.DarkOliveGreen;
                 return true;
             }
             else
             {
-                tBox.BackColor = Color.DarkRed;
-                if (sendMsg) { ConsoleWrite("!DataValidate: " + tBox.Tag + " can't be null."); }
+                if (sendMsg) { ConsoleWrite("!!SpecSniffer: " + tBox.Tag + " can't be empty."); }
                 return false;
             }
         }
@@ -477,17 +337,7 @@ namespace Sniffer
             else
                 return Validate_TBox(TBox_RP, "", true, sendMsg);
         }
-        private bool ValidateCMAR(bool sendMsg)
-        {
-            if (String.IsNullOrWhiteSpace(TBox_newLicence.Text))
-                return Validate_TBox(TBox_newLicence, "CMAR cant be null.", false, sendMsg);
-            else if (TBox_newLicence.Text.StartsWith("03") == false)
-                return Validate_TBox(TBox_newLicence, "Incorrect CMAR licence.", false, sendMsg);
-            else if (TBox_newLicence.Text.Count() < 13)
-                return Validate_TBox(TBox_newLicence, "CMAR licence to short.", false, sendMsg);
-            else
-                return Validate_TBox(TBox_newLicence, "", true, sendMsg);
-        }
+       
         private bool ValidateLicence()
         {
             if (String.IsNullOrEmpty(LBox_Licence.Text))
@@ -503,23 +353,6 @@ namespace Sniffer
                 return true;
             }
         }
-        private void CBox_Licence_Validating(object sender, CancelEventArgs e) { ValidateLicence(); }
-        private bool ValidateDevice()
-        {
-            if (String.IsNullOrEmpty(CBox_DeviceType.Text))
-            {
-                CBox_DeviceType.BackColor = Color.DarkRed;
-                ConsoleWrite("!DataValidate: Select valid licence.");
-                return false;
-            }
-            else
-            {
-                CBox_DeviceType.BackColor = Color.FromArgb(45, 45, 45);
-                CBox_DeviceType.BackColor = Color.DarkOliveGreen;
-                return true;
-            }
-        }
-        private void TBox_newCMAR_Validating(object sender, CancelEventArgs e) { ValidateCMAR(false); }
         #endregion
 
         #region Audio
@@ -712,7 +545,7 @@ namespace Sniffer
 
         public MainWindow()
         {
-
+            
             timer.Start();
             InitializeComponent();
 
@@ -727,23 +560,23 @@ namespace Sniffer
             //some of get spec methods are here for performance
             Spec.GetFingerprint();
             Spec.GetLicenceKey();
+
             //get hdd info
             hdd.GetDiskInfo();
-
-
-            //Load & apply last settings
-            SaveTab.ReadLastSettings();
-            TBox_RP.Text = SaveTab.Rep;
-            TBox_SO.Text = SaveTab.SaleOrderId;
-            LBox_Licence.Text = SaveTab.Licence;
-
-
-            //set hdd info TextBoxses
+            //set hdd TextBoxses
             TBox_HDDsize.Lines = hdd.HDDs.Select(m => m.Value.Size).ToArray();
             TBox_HDDname.Lines = hdd.HDDs.Select(m => m.Value.Model).ToArray();
             TBox_HDDstatus.Lines = hdd.HDDs.Select(m => m.Value.IsOK).ToArray();
             if (TBox_HDDstatus.Text.Contains("Fail"))
                 TBox_HDDstatus.ForeColor = Color.PaleVioletRed;
+
+            //Load & apply last settings
+            SaveTab.ReadLastSettings();
+            TBox_RP.Text = SaveTab.Rep;
+            TBox_SO.Text = SaveTab.SaleOrderId;
+            TBox_comments.Text = SaveTab.Comments;
+            LBox_Licence.Text = SaveTab.Licence;
+
 
             WiFiConnect();
         }
@@ -910,11 +743,9 @@ namespace Sniffer
 
             timer.Stop();
             ConsoleWrite("Load time: " + timer.ElapsedMilliseconds.ToString() + "ms");
+
         }
         #endregion
-
-
-
 
         #region Buttons
 
@@ -936,247 +767,252 @@ namespace Sniffer
         #region Save
         private void btnCMARlog_Click(object sender, EventArgs e)
         {
-            void NoCoaSave()
+            bool ValidateData()
             {
-                try
+                bool validationLicence;
+                bool validationSO;
+                bool validationLog;
+                //validate new licence
+                if (String.IsNullOrWhiteSpace(TBox_newLicence.Text))
+                    validationLicence = Validate_TBox(TBox_newLicence, "CMAR can't be empty.", false, true);
+                else if (TBox_newLicence.Text.StartsWith("03") == false)
+                    validationLicence = Validate_TBox(TBox_newLicence, "Incorrect CMAR licence.", false, true);
+                else if (TBox_newLicence.Text.Count() < 13)
+                    validationLicence = Validate_TBox(TBox_newLicence, "CMAR licence to short.", false, true);
+                else
+                    validationLicence = Validate_TBox(TBox_newLicence, "", true, false);
+
+                //Validate so
+                if (String.IsNullOrWhiteSpace(TBox_SO.Text))
+                    validationSO = Validate_TBox(TBox_SO, "Set SO number.", false, true);
+                else
+                    validationSO = Validate_TBox(TBox_SO, "", true, false);
+
+               
+
+                if(MySQL.IsInTable("serial", "so_log", TBox_serial.Text)==false)
                 {
-                    connMySQL.Open();
-                    MySqlCommand cmd = new MySqlCommand();
-                    cmd.Connection = connMySQL;
-                    cmd.CommandText = String.Format("INSERT INTO tpr_no_coa" +
-                              "( os_name, device_type, serial, manufacturer, model, cpu, new_mar, so) " +
-                        "VALUES(@os_name,@device_type,@serial,@manufacturer,@model,@cpu,@new_mar,@so)");//Prepare placeholder statement.
-
-                    cmd.Prepare();
-
-                    cmd.Parameters.AddWithValue("@os_name", TBox_os_name.Text);
-                    cmd.Parameters.AddWithValue("@device_type", CBox_DeviceType.Text);
-                    cmd.Parameters.AddWithValue("@serial", TBox_serial.Text);
-                    cmd.Parameters.AddWithValue("@manufacturer", Spec.Manufacturer);
-                    cmd.Parameters.AddWithValue("@model", TBox_model.Text);
-                    cmd.Parameters.AddWithValue("@cpu", TBox_cpu.Text);
-                    cmd.Parameters.AddWithValue("@new_mar", TBox_newLicence.Text);
-                    cmd.Parameters.AddWithValue("@so", TBox_SO.Text);
-
-                    cmd.ExecuteNonQuery();
-
-                    ConsoleWrite("");
-                    ConsoleWrite(@"# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #");
-                    ConsoleWrite(@"# # # # # # # # # # CMAR loged in no coa database # # # # # # # # # #");
-                    ConsoleWrite(@"# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #");
-                    btnCMARlog.Enabled = false;
-                    btnCMARlog.Text = "done";
+                    btnSaveSO.BackColor = Color.DarkRed;
+                    ConsoleWrite("!DataValidate: " + "Save spec first.");
+                    validationLog = false;
                 }
-                catch (Exception ex) { ConsoleWrite("!CMARsave: " + ex.Message); }
-                finally
+                else
                 {
-                    if (connMySQL != null)
-                        connMySQL.Close();
+                    btnSaveSO.BackColor = Color.DarkOliveGreen;
+                    validationLog = true;
                 }
-            }
-            void OldCoaSave()
-            {
-                try
+
+                if(validationLicence&& validationSO&& validationLog)
                 {
-                    MySqlCommand cmd = new MySqlCommand();
-                    cmd.Connection = connMySQL;
-                    cmd.CommandText = String.Format("INSERT INTO tpr_old_coa (old_licence,new_mar,so) VALUES (@old_licence,@new_mar,@so)");
-                    connMySQL.Open();
-
-                    cmd.Prepare();
-
-                    cmd.Parameters.AddWithValue("@old_licence", TBox_oldLicence.Text);
-                    cmd.Parameters.AddWithValue("@new_mar", TBox_newLicence.Text);
-                    cmd.Parameters.AddWithValue("@so", TBox_SO.Text);
-                    cmd.ExecuteNonQuery();
-
-                    ConsoleWrite("");
-                    ConsoleWrite(@"# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #");
-                    ConsoleWrite(@" # # # # # # # # # CMAR loged in OLD COA database # # # # # # # # # #");
-                    ConsoleWrite(@"# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #");
-                    btnCMARlog.Enabled = false;
-                    btnCMARlog.Text = "done";
-
+                    return true;
                 }
-                catch (Exception ex) { ConsoleWrite("!CMARsave: " + ex.Message); }
-                finally
+                else
                 {
-                    if (connMySQL != null)
-                        connMySQL.Close();
+                    return false;
                 }
+
             }
 
-            if (ValidateSO(true) && ValidateCMAR(true) && IsValueInDB("serial", "so_log", TBox_serial.Text, false, true))
-                if (TBox_oldLicence.Text.Count() > 13) { OldCoaSave(); MySQL_UpdateValue("so_log", "new_licence", TBox_newLicence.Text, "serial", TBox_serial.Text); }
-                else if (ValidateDevice()) { NoCoaSave(); MySQL_UpdateValue("so_log", "new_licence", TBox_newLicence.Text, "serial", TBox_serial.Text); }
-
-        }
-
-        private void ServerSave_Click(object sender, EventArgs e)
-        {
-
-
-
-            void SaveSpec()
+            if(ValidateData())
             {
-                int errorCode = 0;
-                string hdd1Size;
-                string hdd1Model;
-                string hdd1Serial = "";
-                string hdd2Size;
-                string hdd2Model;
-                string hdd2Serial = "";
-                string gpu1;
-                string gpu2;
-                string comments;
-                string bluetooth;
-                string wifi;
-                string camera;
-                string fpr;
-
-                #region prepare data to save
-                bluetooth = (Spec.BluetoothPresence == true) ? "1" : "0";
-                wifi = (Spec.WifiPresence == true) ? "1" : "0";
-                camera = (Spec.CameraPresence == true) ? "1" : "0";
-                fpr = (Spec.FingerPrintPresence == true) ? "1" : "0";
-
-                try { hdd1Size = TBox_HDDsize.Lines[0]; } catch (Exception) { errorCode = 1; goto noData; }
-
-                try { hdd1Model = TBox_HDDname.Lines[0]; } catch (Exception) { errorCode = 1; goto noData; }
-
-                try { hdd1Serial = hdd.HDDs[0].Serial; }
-                catch (Exception)
+                if(TBox_oldLicence.Text.Count() > 13)
                 {
-                    DialogResult dialogResult = MessageBox.Show("Couldn't read SERIAL NUMBER for disk 1.\nClick Yes if You want save spec anyway(without SN)\nClick No if You want abort save.", "", MessageBoxButtons.YesNo);
-                    if (dialogResult == DialogResult.Yes) { hdd1Serial = "NoSerial"; }
-                    else if (dialogResult == DialogResult.No)
+                    // Perform Old COA save 
+                    if (MySQL.SaveCmarWithCoa(TBox_oldLicence.Text, TBox_newLicence.Text, TBox_SO.Text))
                     {
-                        errorCode = 1;
-                        goto noData;
+                        ConsoleWrite("@MySQL:CMAR saved to Old COA database.");
+                        //update column new licence in main database and print status
+                        ConsoleWrite(MySQL.UpdateValue("so_log", "new_licence", TBox_newLicence.Text, "serial", TBox_serial.Text));
+                        btnCMARlog.Text = "Saved";
+                        btnCMARlog.Enabled = false;
+                    }
+                    else
+                    {
+                        ConsoleWrite("!!MySQL: Licence has not been saved!");
                     }
                 }
+                else
+                {
+                    //validate device type
+                    if (string.IsNullOrEmpty(CBox_DeviceType.Text))
+                    {
+                        CBox_DeviceType.BackColor = Color.DarkRed;
+                        ConsoleWrite("!DataValidate: " + "Set device type.");
+                    }
+                    else
+                    {
+                        //perform no coa save 
+                        if (MySQL.SaveCmarWithoutCoa(TBox_os_name.Text, CBox_DeviceType.Text, TBox_serial.Text, Spec.Manufacturer, TBox_model.Text, TBox_cpu.Text, TBox_newLicence.Text, TBox_SO.Text))
+                        {
+                            ConsoleWrite("@MySQL:CMAR saved to No COA database.");
+                            //update column new licence in main database and print status
+                            ConsoleWrite(MySQL.UpdateValue("so_log", "new_licence", TBox_newLicence.Text, "serial", TBox_serial.Text));
+                            btnCMARlog.Text = "Saved";
+                            btnCMARlog.Enabled = false;
+                        }
+                        else
+                        {
+                            ConsoleWrite("!!MySQL: Licence has not been saved!");
+                        }
 
-                try { hdd2Size = TBox_HDDsize.Lines[1]; } catch (Exception) { hdd2Size = "noHDD2"; }
+                        CBox_DeviceType.BackColor = Color.FromArgb(45, 45, 45);
+                        CBox_DeviceType.ForeColor = Color.DarkOliveGreen;
 
-                try { hdd2Model = TBox_HDDname.Lines[1]; } catch (Exception) { hdd2Model = "noHDD2"; }
+                    }
+                }
+            }  
+        }
 
-                try { hdd2Serial = hdd.HDDs[1].Serial; } catch (Exception) { hdd2Serial = "noHDD2"; }
+
+        private void BtnSaveSO_Click(object sender, EventArgs e)
+        {
+            string hdd1Name;
+            string hdd1Size;
+            string hdd1Serial;
+            string hdd2Name;
+            string hdd2Size;
+            string hdd2Serial;
+            string gpu1;
+            string gpu2;
+            string bluetooth;
+            string wifi;
+            string camera;
+            string fpr;
+            // format some of specification data and save in new string
+            void PrepareDataToSave()
+            {
+
+
+                try
+                {
+                    hdd1Name = TBox_HDDname.Lines[0];
+                    hdd1Size = TBox_HDDsize.Lines[0];
+                }
+                catch (Exception)
+                {
+                    hdd1Name = "n/a";
+                    hdd1Size = "n/a";
+                }
+                try
+                {
+                    hdd1Serial = hdd.HDDs[0].Serial;
+                }
+                catch (Exception)
+                {
+                    hdd1Serial = "n/a";
+                }
+
+                try
+                {
+                    hdd2Name = TBox_HDDname.Lines[1];
+                    hdd2Size = TBox_HDDsize.Lines[1];
+                }
+                catch (Exception)
+                {
+                    hdd2Name = "n/a";
+                    hdd2Size = "n/a";
+                }
+                try
+                {
+                    hdd2Serial = hdd.HDDs[1].Serial;
+                }
+                catch (Exception)
+                {
+                    hdd2Serial = "n/a";
+                }
 
                 try
                 {
                     gpu1 = TBox_gpu.Lines[0];
-                    if (gpu1.Contains("Microsoft")) { errorCode = 2; goto noGPUdriver; }
                 }
-                catch (Exception) { errorCode = 1; goto noData; }
+                catch (Exception)
+                {
 
+                    gpu1 = "n/a";
+                }
                 try
                 {
                     gpu2 = TBox_gpu.Lines[1];
-                    if (gpu2.Contains("Microsoft")) { errorCode = 2; goto noGPUdriver; }
                 }
-                catch (Exception) { gpu2 = "noGPU2"; }
-
-                comments = TBox_comments.Text;
-                if (!String.IsNullOrWhiteSpace(TBox_comments.Text))
+                catch (Exception)
                 {
-                    comments = TBox_comments.Text;
-                    comments = comments.Replace(";", "/");
-                    comments = comments.Replace("\r\n", "/");
+
+                    gpu2 = "n/a";
                 }
-                else { comments = "n/a"; }
 
-                #endregion
 
-                if (btnServerSave.Enabled == true)
-                {
-                    try
-                    {
-                        connMySQL.Open();
-                        MySqlCommand cmd = new MySqlCommand();
-                        cmd.Connection = connMySQL;
+                SaveTab.Comments= TBox_comments.Text;
 
-                        cmd.CommandText = String.Format("INSERT INTO so_log" +
-                    "( so, rp, model,cpu, serial, ram, hdd1_size, hdd1_model, hdd1_serial,  hdd2_size, hdd2_model, hdd2_serial, optical, gpu1, gpu2, resname, diagonal, os_name, os_build, os_language, os_key, os_label, comments, bluetooth, wifi, camera, fpr) VALUES" +
-                    "(@so,@rp,@model,@cpu,@serial,@ram,@hdd1_size,@hdd1_model,@hdd1_serial,@hdd2_size,@hdd2_model,@hdd2_serial,@optical,@gpu1,@gpu2,@resname,@diagonal,@os_name,@os_build,@os_language,@os_key,@os_label,@comments,@bluetooth,@wifi,@camera,@fpr)");
-                        cmd.Prepare();
-
-                        cmd.Parameters.AddWithValue("@so", TBox_SO.Text);
-                        cmd.Parameters.AddWithValue("@rp", TBox_RP.Text);
-                        cmd.Parameters.AddWithValue("@model", TBox_model.Text);
-                        cmd.Parameters.AddWithValue("@cpu", TBox_cpu.Text);
-                        cmd.Parameters.AddWithValue("@serial", TBox_serial.Text);
-                        cmd.Parameters.AddWithValue("@ram", TBox_ram.Text);
-
-                        cmd.Parameters.AddWithValue("@hdd1_size", hdd1Size);
-                        cmd.Parameters.AddWithValue("@hdd1_model", hdd1Model);
-                        cmd.Parameters.AddWithValue("@hdd1_serial", hdd1Serial);
-                        cmd.Parameters.AddWithValue("@hdd2_size", hdd2Size);
-                        cmd.Parameters.AddWithValue("@hdd2_model", hdd2Model);
-                        cmd.Parameters.AddWithValue("@hdd2_serial", hdd2Serial);
-
-                        cmd.Parameters.AddWithValue("@optical", TBox_optical.Text);
-                        cmd.Parameters.AddWithValue("@gpu1", gpu1);
-                        cmd.Parameters.AddWithValue("@gpu2", gpu2);
-
-                        cmd.Parameters.AddWithValue("@resname", TBox_resname.Text);
-                        cmd.Parameters.AddWithValue("@diagonal", TBox_diagonal.Text);
-                        cmd.Parameters.AddWithValue("@os_name", TBox_os_name.Text);
-                        cmd.Parameters.AddWithValue("@os_build", TBox_os_build.Text);
-
-                        cmd.Parameters.AddWithValue("@os_language", TBox_os_language.Text);
-                        cmd.Parameters.AddWithValue("@os_key", Spec.LicenceKey);
-                        cmd.Parameters.AddWithValue("@os_label", LBox_Licence.Text);
-                        cmd.Parameters.AddWithValue("@comments", comments);
-
-                        cmd.Parameters.AddWithValue("@bluetooth", bluetooth);
-                        cmd.Parameters.AddWithValue("@wifi", wifi);
-                        cmd.Parameters.AddWithValue("@camera", camera);
-                        cmd.Parameters.AddWithValue("@fpr", fpr);
-
-                        cmd.ExecuteNonQuery();
-
-                        ConsoleWrite("");
-                        ConsoleWrite(@"# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #");
-                        ConsoleWrite(@"# # # # # # # # # # # # # Sale Order No. " + TBox_SO.Text + " # # # # # # # # # # # #");
-                        ConsoleWrite(@"# # # # # # # # # # Successfully Logged in Database # # # # # # # # #");
-                        ConsoleWrite(@"# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #");
-
-                        btnServerSave.Enabled = false;
-                        btnServerSave.Text = "done";
-                    }
-                    catch (Exception ex) { MessageBox.Show(ex.Message); }
-                    finally { if (connMySQL != null) { connMySQL.Close(); } }
-                } //save to DB
-
-                noData:
-                if (errorCode == 1) { MessageBox.Show("Log has not been made!\nCause:\nNot all fields contains data. "); }
-
-                noGPUdriver:
-                if (errorCode == 2) { MessageBox.Show("Log has not been made!\nCause:\nGPU driver not installed. "); }
+                bluetooth = (Spec.BluetoothPresence == true) ? "1" : "0";
+                wifi = (Spec.WifiPresence == true) ? "1" : "0";
+                camera = (Spec.CameraPresence == true) ? "1" : "0";
+                fpr = (Spec.FingerPrintPresence == true) ? "1" : "0";
             }
 
-            if (ValidateTB(TBox_RP, true) && ValidateTB(TBox_SO, true) && ValidateTB(TBox_model, true) && ValidateTB(TBox_serial, true) && ValidateTB(TBox_cpu, true) && ValidateTB(TBox_optical, true) && ValidateTB(TBox_ram, true) && ValidateTB(TBox_diagonal, true)
-                && ValidateTB(TBox_resname, true) && ValidateTB(TBox_os_name, true) && ValidateTB(TBox_os_build, true) && ValidateTB(TBox_gpu, true) && ValidateTB(TBox_os_language, true) && ValidateTB(TBox_HDDname, true) && ValidateTB(TBox_HDDsize, true)
-                && ValidateLicence())
+            //Check if got all data required to save.
+            bool AllDataReady()
             {
-                SaveSpec();
+                //if any Text box with data used in save to database is empty return false
+                 if (HasDataTextBox(TBox_RP, true) && HasDataTextBox(TBox_SO, true) &&
+                HasDataTextBox(TBox_model, true) && HasDataTextBox(TBox_serial, true) &&
+                HasDataTextBox(TBox_cpu, true) && HasDataTextBox(TBox_optical, true) &&
+                HasDataTextBox(TBox_ram, true) && HasDataTextBox(TBox_diagonal, true) &&
+                HasDataTextBox(TBox_resname, true) && HasDataTextBox(TBox_os_name, true) &&
+                HasDataTextBox(TBox_os_build, true) && HasDataTextBox(TBox_gpu, true) &&
+                HasDataTextBox(TBox_os_language, true) && HasDataTextBox(TBox_HDDname, true) &&
+                HasDataTextBox(TBox_HDDsize, true))
+                {
+                  //  Not installed GPU driver returns false
+                    foreach (var t in TBox_gpu.Lines)
+                    {
+                        if (t.Contains("Microsoft"))// Microsoft in gpu name indicates that driver has not been installed
+                        {
+                            ConsoleWrite("!!SpecSniffer: Install GPU driver before save!");
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
 
+            if(AllDataReady())
+            {
+                PrepareDataToSave();
+                //run sae to database and return string with status of save.
+                string status = MySQL.SaveSpec(TBox_SO.Text, TBox_RP.Text, TBox_model.Text, TBox_cpu.Text, TBox_serial.Text, TBox_ram.Text,
+                   hdd1Size, hdd1Name, hdd1Serial, hdd2Size, hdd2Name, hdd2Serial, TBox_optical.Text, gpu1, gpu2, TBox_resname.Text,
+                   TBox_diagonal.Text, TBox_os_name.Text, TBox_os_build.Text, TBox_os_language.Text,
+                   Spec.LicenceKey, LBox_Licence.Text, SaveTab.Comments, bluetooth, wifi, camera, fpr);
+                    
+                if (status.Contains("@MySQL"))
+                {
+                    ConsoleWrite(status);
+                    btnSaveSO.Text = "Saved :)";
+                    btnSaveSO.Enabled = false;
+                }// if save to database succeeded
+                else
+                {
+                    ConsoleWrite(status);
+                }
+
+                //Save last used settings (SO, RP comments etc.) if Pendrive is pluged in
                 if (CheckForUSB())
                 {
-                    SaveTab.SaleOrderId = TBox_SO.Text;
-                    SaveTab.Rep = TBox_RP.Text;
-                    SaveTab.Comments = TBox_comments.Text.Replace("\r\n", "/").Replace(";", "/");
-                    SaveTab.Licence = LBox_Licence.Text;
-                    SaveTab.WriteSettings();
+                    SaveTab.WriteSettings(TBox_SO.Text, TBox_RP.Text, SaveTab.Comments, LBox_Licence.Text);
                 }
-
             }
         }
+
         #endregion
 
         #endregion
 
         #region Events
+
         #region Click buttons
         private void btnEditMode_Click(object sender, EventArgs e)
         {
@@ -1441,7 +1277,7 @@ namespace Sniffer
             else if (Tab.SelectedTab == Tab.TabPages["tabSO"])
             {
                 if (e.KeyCode == Keys.F5)
-                    btnServerSave.PerformClick();
+                    btnSaveSO.PerformClick();
                 if (e.KeyCode == Keys.F7)
                     btnCMARlog.PerformClick();
 
@@ -1509,15 +1345,24 @@ namespace Sniffer
                 TBox_batteryCharging.ForeColor = Color.DarkGreen;
             }
         }
-
         private void StatusInternet_TextChanged(object sender, EventArgs e)
         {
             if (StatusInternet.Text == "on")
             {
-                // connect to MySQL server
-                if (connMySQL == null)
-                    ConnectToMySQL();
 
+                //    Connect to mysql and set status strip
+                string mysqlRaport = MySQL.Connect();
+                ConsoleWrite(mysqlRaport);
+                if(mysqlRaport.Contains("Connected to server"))
+                {
+                    statusMySQL.Text = "on";
+                    statusMySQL.ForeColor = Color.MediumSpringGreen;
+                }
+                else
+                {
+                    statusMySQL.Text = "off";
+                    statusMySQL.ForeColor = Color.IndianRed;
+                }
                 //connect to network folder
                 if (!CheckForNetworkFolder())
                     ConnectToNetworkFolder();
@@ -1705,5 +1550,7 @@ namespace Sniffer
         #endregion
 
         #endregion
+
+
     }
 }
