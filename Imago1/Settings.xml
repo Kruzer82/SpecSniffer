@@ -1,3 +1,4 @@
 ﻿<Settings>
-  <SaveTab Comments="test" RP="fb" SO="11" SaveSaleOrder="false" SaveComments="false" Licence="No COA"/>
+  <SaveTab Comments="Sale Order comments" RP="Rep" SO="1" SaveSaleOrder="false" SaveComments="false" Licence="No COA"/>
+  <MySQL Server="localhost" Port="3306" User="userName" Password="userPassword" Database="DatabaseName"/>
 </Settings>

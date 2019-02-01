@@ -124,8 +124,6 @@ namespace Sniffer
         }
         public Dictionary<int, DiskDrives> HDDs { get; private set; }
 
-
-
         public void GetDiskInfo()
         {
             HDDs = new Dictionary<int, DiskDrives>();

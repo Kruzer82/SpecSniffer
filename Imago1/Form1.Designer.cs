@@ -94,7 +94,7 @@
             this.tabSO = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.btnCMARlog = new MetroFramework.Controls.MetroButton();
-            this.btnServerSave = new MetroFramework.Controls.MetroButton();
+            this.btnSaveSO = new MetroFramework.Controls.MetroButton();
             this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
             this.TBox_SO = new MetroFramework.Controls.MetroTextBox();
             this.metroLabel10 = new MetroFramework.Controls.MetroLabel();
@@ -189,7 +189,6 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.metroButton5 = new MetroFramework.Controls.MetroButton();
             this.metroButton4 = new MetroFramework.Controls.MetroButton();
-            this.label1 = new System.Windows.Forms.Label();
             this.timerBattery = new System.Windows.Forms.Timer(this.components);
             this.label2 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
@@ -531,7 +530,7 @@
             this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 21.12211F));
             this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 56F));
             this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 64F));
-            this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 110F));
+            this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 114F));
             this.tableLayoutPanel11.Controls.Add(this.metroLabel35, 0, 0);
             this.tableLayoutPanel11.Controls.Add(this.metroLabel34, 0, 0);
             this.tableLayoutPanel11.Controls.Add(this.metroLabel33, 0, 0);
@@ -550,7 +549,7 @@
             this.metroLabel35.AutoSize = true;
             this.metroLabel35.FontSize = MetroFramework.MetroLabelSize.Small;
             this.metroLabel35.ForeColor = System.Drawing.Color.Gray;
-            this.metroLabel35.Location = new System.Drawing.Point(324, 5);
+            this.metroLabel35.Location = new System.Drawing.Point(320, 5);
             this.metroLabel35.Name = "metroLabel35";
             this.metroLabel35.Size = new System.Drawing.Size(58, 15);
             this.metroLabel35.TabIndex = 5;
@@ -564,9 +563,9 @@
             this.metroLabel34.AutoSize = true;
             this.metroLabel34.FontSize = MetroFramework.MetroLabelSize.Small;
             this.metroLabel34.ForeColor = System.Drawing.Color.Gray;
-            this.metroLabel34.Location = new System.Drawing.Point(388, 5);
+            this.metroLabel34.Location = new System.Drawing.Point(384, 5);
             this.metroLabel34.Name = "metroLabel34";
-            this.metroLabel34.Size = new System.Drawing.Size(105, 15);
+            this.metroLabel34.Size = new System.Drawing.Size(109, 15);
             this.metroLabel34.TabIndex = 4;
             this.metroLabel34.Text = "Data";
             this.metroLabel34.UseCustomBackColor = true;
@@ -578,7 +577,7 @@
             this.metroLabel33.AutoSize = true;
             this.metroLabel33.FontSize = MetroFramework.MetroLabelSize.Small;
             this.metroLabel33.ForeColor = System.Drawing.Color.Gray;
-            this.metroLabel33.Location = new System.Drawing.Point(268, 5);
+            this.metroLabel33.Location = new System.Drawing.Point(264, 5);
             this.metroLabel33.Name = "metroLabel33";
             this.metroLabel33.Size = new System.Drawing.Size(50, 15);
             this.metroLabel33.TabIndex = 3;
@@ -606,9 +605,9 @@
             this.metroLabel31.AutoSize = true;
             this.metroLabel31.FontSize = MetroFramework.MetroLabelSize.Small;
             this.metroLabel31.ForeColor = System.Drawing.Color.Gray;
-            this.metroLabel31.Location = new System.Drawing.Point(212, 5);
+            this.metroLabel31.Location = new System.Drawing.Point(209, 5);
             this.metroLabel31.Name = "metroLabel31";
-            this.metroLabel31.Size = new System.Drawing.Size(50, 15);
+            this.metroLabel31.Size = new System.Drawing.Size(49, 15);
             this.metroLabel31.TabIndex = 1;
             this.metroLabel31.Text = "Current";
             this.metroLabel31.UseCustomBackColor = true;
@@ -1064,7 +1063,7 @@
             this.tableLayoutPanel6.ColumnCount = 1;
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel6.Controls.Add(this.btnCMARlog, 0, 7);
-            this.tableLayoutPanel6.Controls.Add(this.btnServerSave, 0, 3);
+            this.tableLayoutPanel6.Controls.Add(this.btnSaveSO, 0, 3);
             this.tableLayoutPanel6.Controls.Add(this.tableLayoutPanel7, 0, 0);
             this.tableLayoutPanel6.Controls.Add(this.tableLayoutPanel9, 0, 1);
             this.tableLayoutPanel6.Controls.Add(this.tableLayoutPanel8, 0, 2);
@@ -1107,25 +1106,25 @@
             this.btnCMARlog.UseSelectable = true;
             this.btnCMARlog.Click += new System.EventHandler(this.btnCMARlog_Click);
             // 
-            // btnServerSave
+            // btnSaveSO
             // 
-            this.btnServerSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnServerSave.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
-            this.btnServerSave.FontSize = MetroFramework.MetroButtonSize.Medium;
-            this.btnServerSave.FontWeight = MetroFramework.MetroButtonWeight.Regular;
-            this.btnServerSave.ForeColor = System.Drawing.Color.DarkGoldenrod;
-            this.btnServerSave.Location = new System.Drawing.Point(356, 163);
-            this.btnServerSave.Margin = new System.Windows.Forms.Padding(0, 3, 0, 0);
-            this.btnServerSave.Name = "btnServerSave";
-            this.btnServerSave.Size = new System.Drawing.Size(135, 37);
-            this.btnServerSave.Style = MetroFramework.MetroColorStyle.Black;
-            this.btnServerSave.TabIndex = 117;
-            this.btnServerSave.Text = "Log SO [F5]";
-            this.btnServerSave.Theme = MetroFramework.MetroThemeStyle.Dark;
-            this.btnServerSave.UseCustomBackColor = true;
-            this.btnServerSave.UseCustomForeColor = true;
-            this.btnServerSave.UseSelectable = true;
-            this.btnServerSave.Click += new System.EventHandler(this.ServerSave_Click);
+            this.btnSaveSO.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSaveSO.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(45)))), ((int)(((byte)(45)))), ((int)(((byte)(45)))));
+            this.btnSaveSO.FontSize = MetroFramework.MetroButtonSize.Medium;
+            this.btnSaveSO.FontWeight = MetroFramework.MetroButtonWeight.Regular;
+            this.btnSaveSO.ForeColor = System.Drawing.Color.DarkGoldenrod;
+            this.btnSaveSO.Location = new System.Drawing.Point(356, 163);
+            this.btnSaveSO.Margin = new System.Windows.Forms.Padding(0, 3, 0, 0);
+            this.btnSaveSO.Name = "btnSaveSO";
+            this.btnSaveSO.Size = new System.Drawing.Size(135, 37);
+            this.btnSaveSO.Style = MetroFramework.MetroColorStyle.Black;
+            this.btnSaveSO.TabIndex = 117;
+            this.btnSaveSO.Text = "Save SO [F5]";
+            this.btnSaveSO.Theme = MetroFramework.MetroThemeStyle.Dark;
+            this.btnSaveSO.UseCustomBackColor = true;
+            this.btnSaveSO.UseCustomForeColor = true;
+            this.btnSaveSO.UseSelectable = true;
+            this.btnSaveSO.Click += new System.EventHandler(this.BtnSaveSO_Click);
             // 
             // tableLayoutPanel7
             // 
@@ -1343,7 +1342,6 @@
             this.LBox_Licence.UseSelectable = true;
             this.LBox_Licence.UseStyleColors = true;
             this.LBox_Licence.SelectedValueChanged += new System.EventHandler(this.CBox_Licence_SelectedValueChanged);
-            this.LBox_Licence.Validating += new System.ComponentModel.CancelEventHandler(this.CBox_Licence_Validating);
             // 
             // tableLayoutPanel8
             // 
@@ -1550,7 +1548,6 @@
             this.TBox_newLicence.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
             this.TBox_newLicence.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
             this.TBox_newLicence.TextChanged += new System.EventHandler(this.TBox_newCMAR_TextChanged);
-            this.TBox_newLicence.Validating += new System.ComponentModel.CancelEventHandler(this.TBox_newCMAR_Validating);
             // 
             // TBox_oldLicence
             // 
@@ -3468,21 +3465,6 @@
             this.metroButton4.UseSelectable = true;
             this.metroButton4.Click += new System.EventHandler(this.btn_restart_Click);
             // 
-            // label1
-            // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            this.label1.Font = new System.Drawing.Font("Ink Free", 11F);
-            this.label1.ForeColor = System.Drawing.Color.DarkOliveGreen;
-            this.label1.Location = new System.Drawing.Point(263, 31);
-            this.label1.Margin = new System.Windows.Forms.Padding(0, 5, 0, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(150, 19);
-            this.label1.TabIndex = 24;
-            this.label1.Text = " v1.78 Crystal Castles";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
             // timerBattery
             // 
             this.timerBattery.Interval = 1300;
@@ -3514,7 +3496,6 @@
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackMaxSize = 80;
             this.ClientSize = new System.Drawing.Size(1040, 700);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.panel6);
@@ -3590,7 +3571,6 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -3638,7 +3618,6 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel17;
         private MetroFramework.Controls.MetroTextBox TBox_HDDsize;
         private MetroFramework.Controls.MetroLabel metroLabel8;
-        private MetroFramework.Controls.MetroTextBox TBox_HDDname;
         private System.Windows.Forms.Panel panel6;
         private System.Windows.Forms.ToolStripStatusLabel Status;
         private System.Windows.Forms.ToolStripStatusLabel StatusInternet;
@@ -3711,13 +3690,12 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel8;
         private MetroFramework.Controls.MetroButton btnCMARlog;
         private MetroFramework.Controls.MetroLabel metroLabel17;
-        private MetroFramework.Controls.MetroButton btnServerSave;
+        private MetroFramework.Controls.MetroButton btnSaveSO;
         private MetroFramework.Controls.MetroLabel metroLabel20;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel21;
         private MetroFramework.Controls.MetroLabel metroLabel21;
         private MetroFramework.Controls.MetroLabel metroLabel9;
         private MetroFramework.Controls.MetroButton btnMySQLconn;
-        private System.Windows.Forms.Label label1;
         private MetroFramework.Controls.MetroTextBox TBox_gpu;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel15;
         private MetroFramework.Controls.MetroTextBox TBox_diagonal;
@@ -3740,6 +3718,7 @@
         private System.Windows.Forms.Timer timerBattery;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Panel panel3;
+        public MetroFramework.Controls.MetroTextBox TBox_HDDname;
     }
 }
 
